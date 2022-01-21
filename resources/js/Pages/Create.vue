@@ -2,7 +2,7 @@
     <div class="p-10">
         <h2 class="text-3xl font-semibold mb-6">Registration Form</h2>
         <form>
-            <div class="grid grid-cols-2 gap-6">
+            <div class="grid grid-cols-2 gap-6 text-blue-500">
                 <div>
                     <noetic-inputs label="First Name" :v_model="fname" placeholder="First Name"></noetic-inputs>
                 </div>
@@ -22,12 +22,12 @@
                     <noetic-inputs></noetic-inputs>
                 </div>
                 <div class="w-full">
-                    <label>last name</label>
+                    <label class="text-blue-500">last name</label>
                     <input class="w-full mt-1.5 px-5 py-2.5 text-sm font-normal text-gray-800 border border-gray-200 rounded-lg" type="text" placeholder="enter your name">
                     <span class="text-red-500 text-xs italic">This is required field</span>
                 </div>
                 <div class="w-full">
-                    <label>city</label>
+                    <label class="text-blue-500">city</label>
                     <select  class="w-full mt-1.5 px-5 py-2.5 text-sm font-normal text-gray-800 border border-gray-200 rounded-lg">
                         <option > Select your city </option>
                         <option> mumbai </option>
@@ -38,7 +38,18 @@
                     </select>
                 </div>
                 <div class="w-full">
-                    <label>Gender</label>
+                    <label class="text-blue-500">country</label>
+                    <select  class="w-full mt-1.5 px-5 py-2.5 text-sm font-normal text-gray-800 border border-gray-200 rounded-lg">
+                        <option > Select your country </option>
+                        <option> india </option>
+                        <option> russia </option>
+                        <option > japan </option>
+                        <option> bangladesh </option>
+                        <option> turkey </option>
+                    </select>
+                </div>
+                <div class="w-full">
+                    <label class="text-blue-500">Gender</label>
                     <div class="w-full mt-2 flex justify-between items-center">
                         <div class="flex items-center">
                             <input class="mr-1.5" type="radio">

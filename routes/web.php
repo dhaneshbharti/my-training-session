@@ -3,6 +3,7 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,4 +32,10 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 Route::get('/sample', [\App\Http\Controllers\HomeController::class, 'Sample']);
 Route::get('/view', [\App\Http\Controllers\HomeController::class, 'View']);
 Route::get('/create', [\App\Http\Controllers\HomeController::class, 'Create']);
+Route::get('/user/dhanesh', [\App\Http\Controllers\HomeController::class, 'userdhanesh']);
 Route::get('/edit', [\App\Http\Controllers\HomeController::class, 'edit']);
+Route::get('/rose', [\App\Http\Controllers\HomeController::class, 'rose']);
+Route::get('/user/create', [\App\Http\Controllers\HomeController::class, 'userCreate']);
+Route::get('/userupdate', [\App\Http\Controllers\HomeController::class, 'userupdate']);
+Route::get('/user/list', [\App\Http\Controllers\HomeController::class, 'userList']);
+Route::get('/user/show', [\App\Http\Controllers\HomeController::class, 'usershow']);

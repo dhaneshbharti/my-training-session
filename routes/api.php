@@ -17,3 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/student/list',[\App\Http\Controllers\StudentController::class,'search']);
+Route::post('/student/create',[\App\Http\Controllers\StudentController::class,'create']);
+
+Route::post('/employee/create',[\App\Http\Controllers\EmployeeController::class,'create']);
+Route::get('/employee/show',[\App\Http\Controllers\EmployeeController::class,'search']);
