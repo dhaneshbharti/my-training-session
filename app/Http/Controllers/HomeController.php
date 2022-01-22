@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Employee;
+use App\Models\Student;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -48,16 +50,25 @@ class HomeController extends Controller
         return Inertia::render('User/List');
     }
 
-    public function userupdate()
+    public function userEdit($id){
+        $data = Student::where('id', $id)->first();
+        return Inertia::render('User/Edit', ['page' => $data]);
+    }
+
+
+    public function userupdate($id)
     {
-        return Inertia::render('userupdate');
+        $data = employee::where('id', $id)->first();
+        return Inertia::render('User/Edit', ['page' => $data]);
     }
     public  function adddata(request $req)
       {
 
       }
 
-      public function userAdd(Request$request){
+    public function delete()
+    {
+        return Inertia::render('User/show');
+    }
 
-      }
 }

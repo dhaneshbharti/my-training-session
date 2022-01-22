@@ -5,19 +5,24 @@
             <table class="min-w-full divide-y divide-gray-500">
                 <thead class="bg-indigo-50 rounded-t-lg">
                 <tr >
+                    <td class="px-4 py-3 rounded-tl-lg">id</td>
                     <td class="px-4 py-3 rounded-tl-lg">Email</td>
                     <td class="px-4 py-3">password</td>
+                    <td class="px-4 py-3">operation</td>
+                    <td class="px-4 py-3">operation</td>
                 </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-500">
 
-                <tr v-for="(ele, index) in tableData" >
-                    <td>{{ele+1}}  </td>
-                    <td>{{ele.email}}</td>
-                    <td>{{ele.password}}</td>
-
-                </tr>
-
+                    <tr v-for="(ele, index) in tableData" >
+                        <td>{{index+1}}  </td>
+                        <td>{{ele.email}}</td>
+                        <td>{{ele.password}}</td>
+                        <td><a href="#" @click="done(ele.id)">Delete</a></td>
+                        <td>
+                            <a :href="'/user/update/'+ele.id">Edit</a>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -39,12 +44,19 @@
                         this.tableData = response.data.data
                     }
                 })
+            },
+            done(id){
+                axios.get('/api/employee/delete/'+id).then(response =>{
+                    if(response.status === 200){
+                        this.fetchList();
+                    }
+                })
             }
         },
         created() {
             this.fetchList();
 
-        }
+        },
     }
 </script>
 

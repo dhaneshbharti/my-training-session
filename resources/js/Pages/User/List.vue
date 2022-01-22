@@ -14,6 +14,7 @@
                 <td> Address <i class="fa fa-sort" style="font-size:16px"></i></td>
                 <td> Gender <i class="fa fa-sort" style="font-size:16px"></i></td>
                 <td> Edit <i class="fa fa-sort" style="font-size:16px"></i></td>
+                <td> Delete <i class="fa fa-sort" style="font-size:16px"></i></td>
             </tr>
             </thead>
             <tbody>
@@ -25,6 +26,12 @@
                 <td>{{ele.phone_no}}</td>
                 <td>{{ele.address}}</td>
                 <td>{{ele.gender}}</td>
+                <td>
+                    <a :href="'/user/edit/'+ele.id">Edit</a>
+                </td>
+                <td>
+                    <a href="#" @click="deleteData(ele.id)">Delete</a>
+                </td>
             </tr>
             </tbody>
 
@@ -43,9 +50,16 @@
         },
         methods:{
             fetchList(){
-                axios.get('/api/employee/show').then(response =>{
+                axios.get('/api/student/list').then(response =>{
                     if(response.status === 200){
                        this.tableData = response.data.data
+                    }
+                })
+            },
+            deleteData(id){
+                axios.get('/api/student/delete/'+id).then(response =>{
+                    if(response.status === 200){
+                        this.fetchList();
                     }
                 })
             }

@@ -35,7 +35,12 @@ Route::get('/create', [\App\Http\Controllers\HomeController::class, 'Create']);
 Route::get('/user/dhanesh', [\App\Http\Controllers\HomeController::class, 'userdhanesh']);
 Route::get('/edit', [\App\Http\Controllers\HomeController::class, 'edit']);
 Route::get('/rose', [\App\Http\Controllers\HomeController::class, 'rose']);
-Route::get('/user/create', [\App\Http\Controllers\HomeController::class, 'userCreate']);
 Route::get('/userupdate', [\App\Http\Controllers\HomeController::class, 'userupdate']);
-Route::get('/user/list', [\App\Http\Controllers\HomeController::class, 'userList']);
 Route::get('/user/show', [\App\Http\Controllers\HomeController::class, 'usershow']);
+Route::get('/user/update/{id}', [\App\Http\Controllers\HomeController::class, 'userupdate']);
+
+
+
+Route::get('/user/create', [\App\Http\Controllers\HomeController::class, 'userCreate']);
+Route::get('/user/list', [\App\Http\Controllers\HomeController::class, 'userList']);
+Route::get('/user/edit/{id}', [\App\Http\Controllers\HomeController::class, 'userEdit']);

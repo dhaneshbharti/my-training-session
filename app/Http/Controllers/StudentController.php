@@ -17,4 +17,17 @@ class StudentController extends Controller
         Student::create($data);
         return response()->json(['data' => 'created'], 200);
     }
+
+    public function update(Request $request){
+        $student = Student::where('id', $request->id)->first();
+        $data = $request->only('roll_number', 'student_name','father_name','class','address','phone_no','gender');
+        $student->update($data);
+        return response()->json(['data' => 'updated'], 200);
+    }
+    public function destroy($id)
+    {
+        $employee = Student::find($id);
+        $employee->delete();
+        return response()->json(['data' => 'deleted'], 200);
+    }
 }
