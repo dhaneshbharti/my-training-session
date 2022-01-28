@@ -23,6 +23,12 @@ Route::post('/student/create',[\App\Http\Controllers\StudentController::class,'c
 Route::post('/student/update',[\App\Http\Controllers\StudentController::class,'update']);
 Route::get('/student/delete/{id}',[\App\Http\Controllers\StudentController::class,'destroy']);
 
-Route::post('/employee/create',[\App\Http\Controllers\EmployeeController::class,'create']);
+Route::get('/employee/create',[\App\Http\Controllers\EmployeeController::class,'create']);
 Route::get('/employee/show',[\App\Http\Controllers\EmployeeController::class,'search']);
 Route::get('/employee/delete/{id}',[\App\Http\Controllers\StudentController::class,'destroy']);
+
+Route::post('/product/create',[\App\Http\Controllers\ProductController::class,'saved']);
+
+Route::get('/Store/create',[\App\Http\Controllers\StoreController::class,'create']);
+
+Route::post('/product/view',[\App\Http\Controllers\ProductController::class,'show']);

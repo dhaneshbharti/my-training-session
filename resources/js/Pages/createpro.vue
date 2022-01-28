@@ -72,50 +72,139 @@
             </div>
         </nav>
     </div>
-    <div class="p-10">
-        <h2 class="text-3xl font-semibold mb-6">here is your chart table: </h2>
-        <div class="border-b border-gray-200 rounded-lg">
-            <table class="min-w-full divide-y divide-gray-500">
-                <thead class="bg-indigo-50 rounded-t-lg text-blue-500 ">
-                <tr >
-                    <td class="px-4 py-3 rounded-tl-lg">Sr.No.</td>
-                    <td class="px-4 py-3">First name</td>
-                    <td class="px-4 py-3">Last name</td>
-                    <td class="px-4 py-3">City</td>
-                    <td class="px-4 py-3 rounded-tr-lg">Gender</td>
-                </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-500">
+    <!--starting starting form-->
+    <div class="p-10 " >
 
-                <tr v-for="(item,index) in charttable" >
-                    <td>{{index+1}}  </td>
-                    <td>{{item.fname}}</td>
-                    <td>{{item.lname}}</td>
-                    <td>{{item.city}}</td>
-                    <td>{{item.gen}}</td>
-                </tr>
+        <div v-if="error_message">{{ error_message }}</div>
+        <form method="POST" class=" bg-white ">
 
-                </tbody>
-            </table>
-        </div>
+            <div class="grid grid-cols-2 gap-6" >
+                <div>
+                    <product-Input label="Product Name" v_model="product_name" class="rounded text-blue-500" type="text" placeholder=""></product-Input>
+                </div>
+
+                <!--                            <span v-if="Object.keys(errors).length && errors.product_name">{{ errors.product_name[0] }}</span>-->
+                <div>
+                    <product-Input label="Product Type"  v_model="product_type " class="text-blue-500 rounded" type="text" placeholder=""></product-Input>
+                </div>
+
+                <div>
+                    <product-Input label="Product ID" v_model="product_ID " class="text-blue-500 rounded" type="text" placeholder=""></product-Input>
+                </div>
+
+                <div >
+                    <product-Input label="Product MFG" v_model="product_MFG " class="text-blue-500 rounded" type="date" placeholder=" "></product-Input>
+                </div>
+
+                <div> <product-Input label="Product EXP" v_model="product_EXP "  class=" text-blue-500 rounded" type="date" placeholder=" "></product-Input>
+                </div>
+
+               <div>
+                <label class=" text-blue-500 sm-bold  " >
+                    Select Peripherls
+                </label>
+
+                <div>
+                    <Multiselect
+                        v-model="multiselect_example"
+                        :options="options"
+                        placeholder="Select one or more"
+                        mode="tags"
+                        :searchable="true"
+                        :createTag="true"
+                    />
+                </div>
+               </div>
+                <div> <noetic-single-select label="model" :dropdown="myDropdown" v_model="model" placeholder="model" class="text-blue-500"></noetic-single-select>
+                </div>
+                <div> <noetic-single-select label="Company" :dropdown="myDropdown2" v_model="company" placeholder="company" class="text-blue-500"></noetic-single-select>
+                </div>
+                <button  type="submit" @click.prevent="submit"  class=" ml-6  bg-blue-500 rounded bg-cover">submit </button>
+            </div>
+        </form>
     </div>
+
 </template>
 
 <script>
+    import  Multiselect  from  '@vueform/multiselect';
+    import axios from 'axios'
+    import ProductInput from "@/components/productInput";
+    import NoeticSingleSelect from "@/components/NoeticSingleSelect";
+
     export default {
-        name: "View",
+        name: "createpro",
+        components: {NoeticSingleSelect, ProductInput,Multiselect},
         data(){
             return{
-                charttable:[
-                    {sno:'1',fname:'dhanesh',lname:'bharti', city:'banglore', gen:'male'},
-                    {sno:'1',fname:'dhanesh',lname:'bharti', city:'banglore', gen:'male'},
-                    {sno:'1',fname:'jk',lname:'vaishya', city:'mumbai', gen:'male'}
-                ] }
-        }
+                product_name:'',
+                product_type:'',
+                product_ID :'',
+                product_MFG:'',
+                product_EXP:'',
+                multiselect_example:[],
+                tags:'tags',
+                product_company:'',
+                product_model:'',
+                errors: {},
+                error_message: '',
+                myDropdown: [
+                    {name:'J7'},
+                    {name:'J2'},
+                    {name:'J5'},
+                    {name:'J6'},
 
+
+                ],
+                myDropdown2:[
+                    {name:'Micromax'},
+                    {name:'Samsung'},
+                    {name:'Gen'},
+                    {name:'Intex'},
+                ],
+                options: [
+                    'Battery',
+                    'Headphone',
+                    'Backcover',
+                    'Chager',
+                ],
+            }
+        },
+        methods:{
+            submit(){
+                console.log(this.product_ID);
+
+                const payload ={
+                    product_ID: this.product_ID,
+                    product_name: this.product_name,
+                    product_type: this.product_type,
+                    Manufactring_date: this.product_MFG,
+                    product_company: this.product_company,
+                    expiry_date: this.product_EXP,
+                    product_model: this.product_model,
+
+                }
+                this.error_message = '';
+                this.errors = {};
+                axios.post('/api/product/create', payload).then(response =>{
+                    if(response.status === 200){
+                        //this.$inertia.get('/user/list');
+                    }
+
+                }).catch((error) => {
+                    console.log(error.response)
+                    if(error.response.status === 422) {
+                        this.error_message = error.response.data.message;
+                        this.errors = error.response.data.errors
+                        console.log(this.errors.product_name[0])
+                    }
+                })
+            }
+        }
     }
+
 </script>
 
-<style scoped>
+<style src="@vueform/multiselect/themes/default.css"></style>
 
-</style>
+

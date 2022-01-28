@@ -50,7 +50,8 @@ class HomeController extends Controller
         return Inertia::render('User/List');
     }
 
-    public function userEdit($id){
+    public function userEdit($id)
+    {
         $data = Student::where('id', $id)->first();
         return Inertia::render('User/Edit', ['page' => $data]);
     }
@@ -71,4 +72,13 @@ class HomeController extends Controller
         return Inertia::render('User/show');
     }
 
+    public function product()
+    {
+        return Inertia::render('createpro');
+    }
+
+    public function joe()
+    {
+        return Inertia::render('View2');
+    }
 }

@@ -72,27 +72,35 @@
             </div>
         </nav>
     </div>
+<!--   Starting Table-->
+
     <div class="p-10">
-        <h2 class="text-3xl font-semibold mb-6">here is your chart table: </h2>
+        <h2 class=" font-semibold mb-6">Here is your  Table: </h2>
         <div class="border-b border-gray-200 rounded-lg">
             <table class="min-w-full divide-y divide-gray-500">
-                <thead class="bg-indigo-50 rounded-t-lg text-blue-500 ">
+                <thead class="bg-indigo-50 rounded-t-lg text-blue-500">
                 <tr >
-                    <td class="px-4 py-3 rounded-tl-lg">Sr.No.</td>
-                    <td class="px-4 py-3">First name</td>
-                    <td class="px-4 py-3">Last name</td>
-                    <td class="px-4 py-3">City</td>
-                    <td class="px-4 py-3 rounded-tr-lg">Gender</td>
+                    <td class="px-4 py-3 rounded-tl-lg">Product Name</td>
+                    <td class="px-4 py-3">Product type</td>
+                    <td class="px-4 py-3">Product ID</td>
+                    <td class="px-4 py-3">Product MFG</td>
+                    <td class="px-4 py-3 rounded-tr-lg">Product EXP</td>
+                    <td class="px-4 py-3">Model</td>
+                    <td class="px-4 py-3 rounded-tr-lg">Company</td>
+<!--                    <td class="px-4 py-3 rounded-tr-lg">Gender</td>-->
                 </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-500">
 
-                <tr v-for="(item,index) in charttable" >
-                    <td>{{index+1}}  </td>
-                    <td>{{item.fname}}</td>
-                    <td>{{item.lname}}</td>
-                    <td>{{item.city}}</td>
-                    <td>{{item.gen}}</td>
+                <tr  v-for="(item,index) in charttable" >
+                    <td class="ml-3">{{index+1}}  </td>
+                    <td class="ml-3">{{item.product_ID}}</td>
+                    <td class="ml-3">{{item.product_name}}</td>
+                    <td class="ml-3">{{item.product_type}}</td>
+                    <td class="ml-3">{{item.Manufactring_date}}</td>
+                    <td class="ml-3">{{item.product_company}}</td>
+                    <td class="ml-3">{{item.expiry_date}}</td>
+                    <td class="ml-3">{{item.product_model}}</td>
                 </tr>
 
                 </tbody>
@@ -103,17 +111,27 @@
 
 <script>
     export default {
-        name: "View",
+        name:"View2",
         data(){
             return{
-                charttable:[
-                    {sno:'1',fname:'dhanesh',lname:'bharti', city:'banglore', gen:'male'},
-                    {sno:'1',fname:'dhanesh',lname:'bharti', city:'banglore', gen:'male'},
-                    {sno:'1',fname:'jk',lname:'vaishya', city:'mumbai', gen:'male'}
-                ] }
-        }
+                charttable:[]
+            }
+        },
+        methods:{
+            fetchList(){
+                axios.post('/api/product/view').then(response =>{
+                    if(response.status === 200){
+                        this.charttable = response.data.data
+                    }
+                })
+            }
+        },
+        created() {
+            this.fetchList();
 
+        }
     }
+
 </script>
 
 <style scoped>

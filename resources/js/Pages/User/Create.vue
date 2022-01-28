@@ -72,10 +72,11 @@
                     student_name: this.student_name,
                     father_name: this.father_name,
                     class: this.standard,
-                    phone_no: this.phone_number,
+                    phone_number: this.phone_number,
                     address: this.address,
                     gender: this.gender,
                 }
+                console.log('Check');
                axios.post('/api/student/create', payload).then(response =>{
                    if(response.status === 200){
                        this.$inertia.get('/user/list');

@@ -10,48 +10,37 @@
                     <noetic-inputs label="Last Name" :v_model="lname" placeholder="Last Name"></noetic-inputs>
                 </div>
                 <div>
-                    <noetic-inputs label="Last Name"></noetic-inputs>
+                    <noetic-single-select label="city" :v_model="city" :dropdown="myDropdown" placeholder="Select your city"></noetic-single-select>
                 </div>
                 <div>
-                    <noetic-single-select label="city" :dropdown="myDropdown" placeholder="Select your city"></noetic-single-select>
-                </div>
-                <div>
-                    <noetic-single-select label="District" :dropdown="myDropdown" placeholder="Select your district"></noetic-single-select>
-                </div>
-                <div>
-                    <noetic-inputs></noetic-inputs>
+                    <noetic-single-select label="District" :v_model="District" :dropdown="myDropdown" placeholder="Select your district"></noetic-single-select>
                 </div>
                 <div class="w-full">
-                    <label class="text-blue-500">last name</label>
-                    <input class="w-full mt-1.5 px-5 py-2.5 text-sm font-normal text-gray-800 border border-gray-200 rounded-lg" type="text" placeholder="enter your name">
-                    <span class="text-red-500 text-xs italic">This is required field</span>
-                </div>
-                <div class="w-full">
-                    <label class="text-blue-500">city</label>
-                    <select  class="w-full mt-1.5 px-5 py-2.5 text-sm font-normal text-gray-800 border border-gray-200 rounded-lg">
-                        <option > Select your city </option>
-                        <option> mumbai </option>
-                        <option> bhopal </option>
-                        <option selected> banglore </option>
-                        <option> hyderabad </option>
-                        <option> pune </option>
+                    <label class="text-blue-500">State</label>
+                    <select :v-model="state" class="w-full mt-1.5 px-5 py-2.5 text-sm font-normal text-gray-800 border border-gray-200 rounded-lg">
+                        <option > Select your State </option>
+                        <option> Madhya pradesh </option>
+                        <option> Maharashtral </option>
+                        <option selected>Gujrat </option>
+                        <option> Rajshthan </option>
+                        <option> Delhi </option>
                     </select>
                 </div>
                 <div class="w-full">
                     <label class="text-blue-500">country</label>
-                    <select  class="w-full mt-1.5 px-5 py-2.5 text-sm font-normal text-gray-800 border border-gray-200 rounded-lg">
+                    <select  :v_model="country" class="w-full mt-1.5 px-5 py-2.5 text-sm font-normal text-gray-800 border border-gray-200 rounded-lg">
                         <option > Select your country </option>
-                        <option> india </option>
-                        <option> russia </option>
-                        <option > japan </option>
-                        <option> bangladesh </option>
-                        <option> turkey </option>
+                        <option> India </option>
+                        <option> Russia </option>
+                        <option > Japan </option>
+                        <option> Bangladesh </option>
+                        <option> Turkey </option>
                     </select>
                 </div>
                 <div class="w-full">
                     <label class="text-blue-500">Gender</label>
                     <div class="w-full mt-2 flex justify-between items-center">
-                        <div class="flex items-center">
+                        <div :v_model="Gender"  class="flex items-center">
                             <input class="mr-1.5" type="radio">
                             <span class="text-sm font-normal text-gray-700">Male</span>
                         </div>
@@ -68,7 +57,7 @@
 
             </div>
             <div class="flex justify-center mt-8">
-                <button class="bg-blue-500 text-white px-10 py-3 text-base font-medium rounded-md">Submit</button>
+                <button @click.prevent="submit" class="bg-blue-500 text-white px-10 py-3 text-base font-medium rounded-md">Submit</button>
             </div>
     </form>
     </div>
@@ -82,16 +71,46 @@
         components: {NoeticSingleSelect, NoeticInputs},
         data(){
             return{
-                fname:'Dhanesh',
-                lname:'Lorem ipsum',
+                fname:'',
+                lname:'',
+                errors:{},
+                error_massage:'',
+                City:'',
+                State:'',
+                Country:'',
                 myDropdown:[
                     {name:'Mumbai'},
                     {name:'Mumbai'},
                     {name:'Pune'},
                     {name:'Hyderabad'},
                     {name:'Indore'},
+                    this.error_massage='',
+                    this.errors={},
+
                 ]
             }
+        },
+        methods:{
+            submit()
+            {
+                const payload={
+                    First_name:this.fname,
+                    Last_name:this.lname,
+                    City:this.city,
+                    District:this.District,
+                    State:this.state,
+                    // Gender:this.Gender,
+                    Country:this.country,
+
+                }
+                console.log('Check');
+                axios.post('/api/Store/View2', payload).then(response =>{
+                    if(response.status === 200){
+                        this.$inertia.get('/user/list');
+                    }
+                })
+            }
+
         }
     }
 </script>
