@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,8 +28,15 @@ Route::get('/employee/create',[\App\Http\Controllers\EmployeeController::class,'
 Route::get('/employee/show',[\App\Http\Controllers\EmployeeController::class,'search']);
 Route::get('/employee/delete/{id}',[\App\Http\Controllers\StudentController::class,'destroy']);
 
-Route::post('/product/create',[\App\Http\Controllers\ProductController::class,'saved']);
-
 Route::get('/Store/create',[\App\Http\Controllers\StoreController::class,'create']);
 
+
+Route::post('/product/create',[\App\Http\Controllers\ProductController::class,'save']);
 Route::post('/product/view',[\App\Http\Controllers\ProductController::class,'show']);
+Route::get('/product/delete/{id}',[\App\Http\Controllers\ProductController::class,'destroy']);
+Route::post('update',[\App\Http\Controllers\ProductController::class,'Update']);
+Route::get('access',[\App\Http\Controllers\AccessoriesController::class,'accessories']);
+
+
+
+

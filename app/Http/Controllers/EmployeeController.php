@@ -1,11 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\Employee;
 use Illuminate\Http\Request;
 use function Psr\Log\alert;
-
 class EmployeeController extends Controller
 {
     public function search()

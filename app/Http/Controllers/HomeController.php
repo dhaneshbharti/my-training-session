@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Employee;
+use App\Models\Product;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -81,4 +82,10 @@ class HomeController extends Controller
     {
         return Inertia::render('View2');
     }
+    public function dhanes($id)
+    {
+        $data = Product::where('id', $id)->first();
+        return Inertia::render('Updatepro', ['page' => $data]);
+    }
+
 }

@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ProductModel extends Model
+class CustomerAccessories extends Model
 {
     use HasFactory;
-
     protected $guarded = [];
-    protected  $table ='product';
+
+    protected  $table ='customer_accessories';
 
 }

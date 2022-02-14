@@ -80,27 +80,32 @@
             <table class="min-w-full divide-y divide-gray-500">
                 <thead class="bg-indigo-50 rounded-t-lg text-blue-500">
                 <tr >
+                    <td class="px-4 py-3 rounded-tl-lg">Product ID</td>
                     <td class="px-4 py-3 rounded-tl-lg">Product Name</td>
                     <td class="px-4 py-3">Product type</td>
-                    <td class="px-4 py-3">Product ID</td>
                     <td class="px-4 py-3">Product MFG</td>
+                    <td class="px-4 py-3 rounded-tr-lg">Company</td>
                     <td class="px-4 py-3 rounded-tr-lg">Product EXP</td>
                     <td class="px-4 py-3">Model</td>
-                    <td class="px-4 py-3 rounded-tr-lg">Company</td>
+                    <td class="px-4 py-3">Operation</td>
 <!--                    <td class="px-4 py-3 rounded-tr-lg">Gender</td>-->
                 </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-500">
 
                 <tr  v-for="(item,index) in charttable" >
-                    <td class="ml-3">{{index+1}}  </td>
-                    <td class="ml-3">{{item.product_ID}}</td>
-                    <td class="ml-3">{{item.product_name}}</td>
-                    <td class="ml-3">{{item.product_type}}</td>
-                    <td class="ml-3">{{item.Manufactring_date}}</td>
-                    <td class="ml-3">{{item.product_company}}</td>
-                    <td class="ml-3">{{item.expiry_date}}</td>
-                    <td class="ml-3">{{item.product_model}}</td>
+                    <td >{{index+1}}  </td>
+<!--                    <td >{{item.product_id}}</td>-->
+                    <td>{{item.product_name}}</td>
+                    <td >{{item.product_type}}</td>
+                    <td >{{item.manufacturing_date}}</td>
+                    <td >{{item.product_company}}</td>
+                    <td >{{item.expiry_date}}</td>
+                    <td >{{item.product_model}}</td>
+                    <td><a href="#" @click="done(item.id)"><i class="fa fa-remove" style="font-size:20px;color:red"></i></a>
+                        <a :href="'/Updatepro/'+item.id"><i style='font-size:20px; color:green ' class='fa fa-edit'></i></a>
+                    </td>
+
                 </tr>
 
                 </tbody>
@@ -116,12 +121,20 @@
             return{
                 charttable:[]
             }
+
         },
         methods:{
             fetchList(){
                 axios.post('/api/product/view').then(response =>{
                     if(response.status === 200){
                         this.charttable = response.data.data
+                    }
+                })
+            },
+            done(id){
+                axios.get('/api/product/delete/'+id).then(response =>{
+                    if(response.status === 200){
+                        this.fetchList();
                     }
                 })
             }

@@ -55,18 +55,23 @@
                 password:'',
             }
         },
-        methods:{
-            submit(){
-                const payload ={
-                    email: this.email,
-                    password: this.password,
+        methods:
+        {
+            submit()
+            {
+                const payload =
+                    {
+                        email: this.email,
+                        password: this.password,
 
-                }
-                axios.post('/api/employee/create', payload).then(response =>{
-                    if(response.status === 200){
-                        this.$inertia.get('/user/show');
                     }
-                })
+                axios.post('/api/employee/create', payload).then(response =>
+                    {
+                        if(response.status === 200)
+                        {
+                            this.$inertia.get('/user/show');
+                        }
+                    })
             }
         },
         created() {

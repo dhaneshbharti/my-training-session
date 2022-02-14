@@ -85,13 +85,13 @@
                     <label class="rounded text-blue-500">Product Type</label>
                     <input v-model="product_type" class="w-full mt-1.5 px-5 py-2.5 text-sm font-normal text-gray-800 border border-gray-200 rounded-lg" type="text">
                 </div>
-<!--                <div class="w-full">-->
-<!--                    <label class="rounded text-blue-500">Product ID</label>-->
-<!--                    <input v-model="product_id" type="number" placeholder="" class="w-full mt-1.5 px-5 py-2.5 text-sm font-normal text-gray-800 border border-gray-200 rounded-lg">-->
-<!--                </div>-->
+                <!--                <div class="w-full">-->
+                <!--                    <label class="rounded text-blue-500">Product ID</label>-->
+                <!--                    <input v-model="product_id" type="number" placeholder="" class="w-full mt-1.5 px-5 py-2.5 text-sm font-normal text-gray-800 border border-gray-200 rounded-lg">-->
+                <!--                </div>-->
                 <div class="w-full">
                     <label class="rounded text-blue-500">Product MFG</label>
-                    <input v-model="product_MFG" type="date" placeholder="" class="w-full mt-1.5 px-5 py-2.5 text-sm font-normal text-gray-800 border border-gray-200 rounded-lg">
+                    <input v-model="manufacturing_date" type="date" placeholder="" class="w-full mt-1.5 px-5 py-2.5 text-sm font-normal text-gray-800 border border-gray-200 rounded-lg">
                 </div>
                 <div class="w-full">
                     <label class="rounded text-blue-500">Product EXP</label>
@@ -99,12 +99,12 @@
                 </div>
                 <div>
                     <label class=" text-blue-500 sm-bold  " >
-                        Accessories
+                        Select Peripherls
                     </label>
                     -                <div class="mt-2">
                     <Multiselect
                         v-model="multiselect_example"
-                        :options="optionsAccessories"
+                        :options="options"
                         placeholder="Select one or more"
                         mode="tags"
                         :searchable="true"
@@ -126,10 +126,11 @@
                         <option v-for="(item,index) in myDropdown2" >{{item.name}}</option>
                     </select>
                 </div>
-                <div style="padding-top:30px; padding-left:100px;">
-                <button  @click.prevent="submit"  class="bg-blue-500 rounded bg-cover border-2 p-1  text-white">SUBMIT </button>
-                </div>
-            </div>
+               <div style="padding-top:30px; padding-left:100px;">
+                   <button  type="submit" @click.prevent="submit"  class="bg-blue-500 rounded bg-cover border-2 p-1  text-white ">UPDATE</button>
+               </div>
+               </div>
+
         </form>
     </div>
 
@@ -141,21 +142,24 @@
     import ProductInput from "@/components/productInput";
     import NoeticSingleSelect from "@/components/NoeticSingleSelect";
 
-    export default {
-        name: "createpro",
+    export default
+    {
+        name: "Updatepro",
         components: {NoeticSingleSelect, ProductInput,Multiselect},
-        data(){
+        props:['page'],
+        data()
+        {
             return{
-                // product_id :'',
+                product_id :'',
                 product_name:'',
                 product_type:'',
-                product_MFG:'',
+                manufacturing_date:'',
                 expiry_date:'',
                 product_company:'',
                 product_model:'',
                 multiselect_example:[],
                 tags:'tags',
-                optionsAccessories:[],
+
                 errors: {},
                 error_message: '',
                 myDropdown: [
@@ -170,56 +174,51 @@
                     {id: 3,name:'Gen'},
                     {id: 4,name:'Intex'},
                 ],
-                // options: [
-                //     {value: 1, label:'Battery'},
-                //     {value: 2, label:'Headphone'},
-                //     {value: 3, label:'Backcover'},
-                //     {value: 4, label:'Chager'},
-                // ],
+                options: [
+                    {value: 1, label:'Battery'},
+                    {value: 2, label:'Headphone'},
+                    {value: 3, label:'Backcover'},
+                    {value: 4, label:'Chager'},
+                ],
 
             }
         },
-        methods:{
-            fetchData(){
-                axios.get('/api/access').then(response => {
-                    if(response.status === 200) {
-                        this.optionsAccessories = response.data.data.map(a => ({
-                            value: a.id,
-                            label: a.name
-                        }))
+        methods: {
+            submit() {
+                const payload = {
+                        id: this.aproduct_id,
+                        product_name: this.product_name,
+                        product_type: this.product_type,
+                        manufacturing_date: this.manufacturing_date,
+                        product_company: this.product_company,
+                        expiry_date: this.expiry_date,
+                        product_model: this.product_model,
+                        // peripherals: this.multiselect_example,
                     }
-                })
+                axios.post('/api/update', payload).then(response =>
+                     {
+                        if(response.status === 200)
+                            {
+                               this.$inertia.get('/view2');
+                            }
+                     })
 
-            },
-            submit(){
-                const payload ={
-                    // product_id: this.product_id,
-                    product_name: this.product_name,
-                    product_type: this.product_type,
-                    manufacturing_date: this.product_MFG,
-                    product_company: this.product_company,
-                    expiry_date: this.expiry_date,
-                    product_model: this.product_model,
-                    accessories: this.multiselect_example
-                }
-                axios.post('/api/product/create', payload).then(response =>{
-                    if(response.status === 200){
-                        this.$inertia.get('/view2');
-                    }
-
-                }).catch((error) => {
-                    console.log(error.response)
-                    if(error.response.status === 422) {
-                        this.error_message = error.response.data.message;
-                        this.errors = error.response.data.errors
-                        console.log(this.errors.product_name[0])
-                    }
-                })
             }
         },
-        created(){
-            this.fetchData();
+        created() {
+            // console.log(this.page);
+                this.aproduct_id=this.page.id,
+                this.product_name = this.page.product_name,
+                this.product_type = this.page.product_type,
+                this.manufacturing_date = this.page.manufacturing_date,
+                this.product_company = this.page.product_company,
+                this.expiry_date = this.page.expiry_date,
+                this.product_model = this.page.product_model
+                // this.peripherals= this.page.multiselect_example
         }
+
+
+
     }
 
 </script>

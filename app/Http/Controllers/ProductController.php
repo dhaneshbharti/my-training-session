@@ -1,29 +1,41 @@
 <?php
-
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProductRequest;
-use App\Models\Employee;
-use App\Models\ProductModel;
-use Carbon\Carbon;
+use App\Models\Product;
+//use App\Models\Student;
 use Illuminate\Http\Request;
-use function GuzzleHttp\Promise\all;
 
 class ProductController extends Controller
 {
-    public function saved(ProductRequest $request)
+    public function destroy($id)
     {
-        $data = $request->only('product_ID', 'product_name','product_type','Manufactring_date','product_company','expiry_date');
-        $data['expiry_date'] = Carbon::parse($data['expiry_date']);
-        $data['Manufactring_date'] = Carbon::parse($data['Manufactring_date']);
-
-        ProductModel::create($data);
-        return response()->json(['data' => 'created'], 200);
+        $employee = Product::find($id);
+        $employee->delete();
+        return response()->json(['data' => 'deleted'], 200);
     }
+
+    public function save(Request $request)
+    {
+        $data = $request->only('product_name', 'product_type', 'manufacturing_date', 'product_company', 'expiry_date', 'product_model');
+//           $data['expiry_date'] = Carbon::parse($data['expiry_date']);
+//         $data['Manufactring_date'] = Carbon::parse($data['Manufactring_date']);
+
+        $created=Product::create($data);
+        $created->accessories()->attach(collect($request->accessories));
+        return response()->json(['data' => 'created'], 200);
+
+    }
+
     public function show()
     {
-        $data=ProductModel::all();
+        $data = Product::all();
         return response()->json(['data' => $data], 200);
+    }
+    public function Update(Request $request){
+        $student = Product::where('id', $request->id)->first();
+        $data = $request->only('product_name','product_type','manufacturing_date','product_company','expiry_date','product_model');
+        $student->update($data);
+        return response()->json(['data' => 'updated'], 200);
     }
 
 }
