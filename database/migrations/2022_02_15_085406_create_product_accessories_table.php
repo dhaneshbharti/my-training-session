@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCmodelsTable extends Migration
+class CreateProductAccessoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class CreateCmodelsTable extends Migration
      */
     public function up()
     {
-        Schema::create('cmodels', function (Blueprint $table) {
+        Schema::create('product_accessories', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('product_id');
+            $table->unsignedBigInteger('accessories_id');
             $table->timestamps();
         });
     }
@@ -26,6 +28,6 @@ class CreateCmodelsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cmodels');
+        Schema::dropIfExists('product_accessories');
     }
 }
