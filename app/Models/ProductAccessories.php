@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\ProductCompany;
 
-class Company extends Model
+class ProductAccessories extends Model
 {
     use HasFactory;
-    protected $guarded = [];
-    
+
+    protected $table="product_accessories";
 }

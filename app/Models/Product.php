@@ -12,10 +12,14 @@ class Product extends Model
 
     protected $guarded = [];
 
-
     protected  $table ='product';
+
     public function accessories(){
         return $this->belongsToMany(Accessories::class,'customer_accessories','user_id','accessories_id');
+    }
+    public function company()
+    {
+        return $this->belongsTo(company::class, 'c_id','id');
     }
 
 }

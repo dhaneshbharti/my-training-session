@@ -116,14 +116,14 @@
                     <label class="rounded text-blue-500">Model</label>
                     <select v-model="product_model" class="w-full mt-1.5 px-5 py-2.5 text-sm font-normal text-gray-800 border border-gray-200 rounded-lg">
                         <option selected value="">Select One</option>
-                        <option v-for="(item,index) in myDropdown" >{{item.name}}</option>
+                        <option v-for="item in optionModel" :value="item.id" :key="item.id">{{item.Name}}</option>
                     </select>
                 </div>
                 <div class="w-full">
                     <label class="rounded text-blue-500">Company</label>
                     <select v-model="product_company" class="w-full mt-1.5 px-5 py-2.5 text-sm font-normal text-gray-800 border border-gray-200 rounded-lg">
                         <option selected value="">Select One</option>
-                        <option v-for="(item,index) in myDropdown2" >{{item.name}}</option>
+                        <option v-for="item in optionCompany" :value="item.id" :key="item.id" >{{item.Name}}</option>
                     </select>
                 </div>
                 <div style="padding-top:30px; padding-left:100px;">
@@ -156,20 +156,22 @@
                 multiselect_example:[],
                 tags:'tags',
                 optionsAccessories:[],
-                errors: {},
+                optionModel:[],
+                optionCompany:[],
+                 errors: {},
                 error_message: '',
-                myDropdown: [
-                    {id: 1, name:'J7'},
-                    {id: 2,name:'J2'},
-                    {id: 3,name:'J5'},
-                    {id: 4,name:'J6'},
-                ],
-                myDropdown2:[
-                    {id: 1,name:'Micromax'},
-                    {id: 2,name:'Samsung'},
-                    {id: 3,name:'Gen'},
-                    {id: 4,name:'Intex'},
-                ],
+                // myDropdown: [
+                //     {id: 1, name:'J7'},
+                //     {id: 2,name:'J2'},
+                //     {id: 3,name:'J5'},
+                //     {id: 4,name:'J6'},
+                // ],
+                // myDropdown2:[
+                //     {id: 1,name:'Micromax'},
+                //     {id: 2,name:'Samsung'},
+                //     {id: 3,name:'Gen'},
+                //     {id: 4,name:'Intex'},
+                // ],
                 // options: [
                 //     {value: 1, label:'Battery'},
                 //     {value: 2, label:'Headphone'},
@@ -180,17 +182,39 @@
             }
         },
         methods:{
-            fetchData(){
-                axios.get('/api/access').then(response => {
+                    fetchData()
+                    {
+                         axios.get('/api/access').then(response => 
+                        {
+                            if(response.status === 200)
+                             {
+                            this.optionsAccessories = response.data.data.map(a => (
+                                {
+                                    value: a.id,
+                                    label: a.name
+                                }))
+                        }
+                    })
+                
+
+               
+               },
+            getModel(){
+         axios.get('/api/cmodel/').then(response => {
+             if(response.status === 200) {
+                 this.optionModel = response.data.data
+             }
+         })
+            },
+           getCompany(){
+                axios.get('/api/product/model/'+this.product_model).then(response => {
                     if(response.status === 200) {
-                        this.optionsAccessories = response.data.data.map(a => ({
-                            value: a.id,
-                            label: a.name
-                        }))
+                        this.optionCompany = response.data.data
                     }
                 })
-
-            },
+           
+        
+       },
             submit(){
                 const payload ={
                     // product_id: this.product_id,
@@ -219,7 +243,17 @@
         },
         created(){
             this.fetchData();
+             this.getModel();
+        },
+        watch:{
+    //    'multiselect_example':{
+    //         handler:'getModel'
+    //    },
+        'product_model':{
+            handler:'getCompany'
         }
+        }
+
     }
 
 </script>

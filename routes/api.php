@@ -36,6 +36,10 @@ Route::post('/product/view',[\App\Http\Controllers\ProductController::class,'sho
 Route::get('/product/delete/{id}',[\App\Http\Controllers\ProductController::class,'destroy']);
 Route::post('update',[\App\Http\Controllers\ProductController::class,'Update']);
 Route::get('access',[\App\Http\Controllers\AccessoriesController::class,'accessories']);
+Route::get('cmodel',[\App\Http\Controllers\ProductController::class,'cmodel']);
+Route::get('product/model/{id}',[\App\Http\Controllers\ProductController::class,'comodel']);
+
+
 
 
 

@@ -16,7 +16,7 @@ class CreateProductAccessoriesTable extends Migration
         Schema::create('product_accessories', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('product_id');
-            $table->unsignedBigInteger('accessories_id');
+            $table->unsignedBigInteger('accessory_id');
             $table->timestamps();
         });
     }

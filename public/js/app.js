@@ -21846,34 +21846,22 @@ __webpack_require__.r(__webpack_exports__);
       multiselect_example: [],
       tags: 'tags',
       optionsAccessories: [],
+      optionModel: [],
+      optionCompany: [],
       errors: {},
-      error_message: '',
-      myDropdown: [{
-        id: 1,
-        name: 'J7'
-      }, {
-        id: 2,
-        name: 'J2'
-      }, {
-        id: 3,
-        name: 'J5'
-      }, {
-        id: 4,
-        name: 'J6'
-      }],
-      myDropdown2: [{
-        id: 1,
-        name: 'Micromax'
-      }, {
-        id: 2,
-        name: 'Samsung'
-      }, {
-        id: 3,
-        name: 'Gen'
-      }, {
-        id: 4,
-        name: 'Intex'
-      }] // options: [
+      error_message: '' // myDropdown: [
+      //     {id: 1, name:'J7'},
+      //     {id: 2,name:'J2'},
+      //     {id: 3,name:'J5'},
+      //     {id: 4,name:'J6'},
+      // ],
+      // myDropdown2:[
+      //     {id: 1,name:'Micromax'},
+      //     {id: 2,name:'Samsung'},
+      //     {id: 3,name:'Gen'},
+      //     {id: 4,name:'Intex'},
+      // ],
+      // options: [
       //     {value: 1, label:'Battery'},
       //     {value: 2, label:'Headphone'},
       //     {value: 3, label:'Backcover'},
@@ -21897,8 +21885,26 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
     },
-    submit: function submit() {
+    getModel: function getModel() {
       var _this2 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/cmodel/').then(function (response) {
+        if (response.status === 200) {
+          _this2.optionModel = response.data.data;
+        }
+      });
+    },
+    getCompany: function getCompany() {
+      var _this3 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/product/model/' + this.product_model).then(function (response) {
+        if (response.status === 200) {
+          _this3.optionCompany = response.data.data;
+        }
+      });
+    },
+    submit: function submit() {
+      var _this4 = this;
 
       var payload = {
         // product_id: this.product_id,
@@ -21912,21 +21918,30 @@ __webpack_require__.r(__webpack_exports__);
       };
       axios__WEBPACK_IMPORTED_MODULE_1___default().post('/api/product/create', payload).then(function (response) {
         if (response.status === 200) {
-          _this2.$inertia.get('/view2');
+          _this4.$inertia.get('/view2');
         }
       })["catch"](function (error) {
         console.log(error.response);
 
         if (error.response.status === 422) {
-          _this2.error_message = error.response.data.message;
-          _this2.errors = error.response.data.errors;
-          console.log(_this2.errors.product_name[0]);
+          _this4.error_message = error.response.data.message;
+          _this4.errors = error.response.data.errors;
+          console.log(_this4.errors.product_name[0]);
         }
       });
     }
   },
   created: function created() {
     this.fetchData();
+    this.getModel();
+  },
+  watch: {
+    //    'multiselect_example':{
+    //         handler:'getModel'
+    //    },
+    'product_model': {
+      handler: 'getCompany'
+    }
   }
 });
 
@@ -28181,24 +28196,26 @@ var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_20 = {
+var _hoisted_20 = ["value"];
+var _hoisted_21 = {
   "class": "w-full"
 };
 
-var _hoisted_21 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "class": "rounded text-blue-500"
 }, "Company", -1
 /* HOISTED */
 );
 
-var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
   selected: "",
   value: ""
 }, "Select One", -1
 /* HOISTED */
 );
 
-var _hoisted_23 = {
+var _hoisted_24 = ["value"];
+var _hoisted_25 = {
   style: {
     "padding-top": "30px",
     "padding-left": "100px"
@@ -28260,28 +28277,34 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return $data.product_model = $event;
     }),
     "class": "w-full mt-1.5 px-5 py-2.5 text-sm font-normal text-gray-800 border border-gray-200 rounded-lg"
-  }, [_hoisted_19, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.myDropdown, function (item, index) {
-    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.name), 1
-    /* TEXT */
-    );
-  }), 256
-  /* UNKEYED_FRAGMENT */
+  }, [_hoisted_19, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.optionModel, function (item) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
+      value: item.id,
+      key: item.id
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.Name), 9
+    /* TEXT, PROPS */
+    , _hoisted_20);
+  }), 128
+  /* KEYED_FRAGMENT */
   ))], 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.product_model]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [_hoisted_21, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.product_model]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [_hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
     "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
       return $data.product_company = $event;
     }),
     "class": "w-full mt-1.5 px-5 py-2.5 text-sm font-normal text-gray-800 border border-gray-200 rounded-lg"
-  }, [_hoisted_22, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.myDropdown2, function (item, index) {
-    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.name), 1
-    /* TEXT */
-    );
-  }), 256
-  /* UNKEYED_FRAGMENT */
+  }, [_hoisted_23, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.optionCompany, function (item) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
+      value: item.id,
+      key: item.id
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.Name), 9
+    /* TEXT, PROPS */
+    , _hoisted_24);
+  }), 128
+  /* KEYED_FRAGMENT */
   ))], 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.product_company]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.product_company]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     onClick: _cache[7] || (_cache[7] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
       return $options.submit && $options.submit.apply($options, arguments);
     }, ["prevent"])),

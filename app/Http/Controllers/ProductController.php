@@ -2,7 +2,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
-//use App\Models\Student;
+use App\Models\Company;
+use App\Models\CModel;
+
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -25,6 +27,19 @@ class ProductController extends Controller
         return response()->json(['data' => 'created'], 200);
 
     }
+    public function cmodel()
+    {
+        //
+        $data =CModel::all();
+
+        return response()->json(['data' => $data]);
+    }
+    public function comodel($id)
+    {
+        //
+        return response()->json(['data' => Company::where('c_id', $id)->get()], 200);
+
+    }
 
     public function show()
     {
@@ -37,5 +52,8 @@ class ProductController extends Controller
         $student->update($data);
         return response()->json(['data' => 'updated'], 200);
     }
+    public function return()
+     {
 
+     }
 }

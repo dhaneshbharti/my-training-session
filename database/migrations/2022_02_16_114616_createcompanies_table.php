@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Product extends Migration
+class CreateCompaniesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class Product extends Migration
      */
     public function up()
     {
-        Schema::create('Product', function (Blueprint $table) {
+        Schema::create('companies', function (Blueprint $table) {
             $table->id();
-            $table->string('product_name');
-            $table->string('product_type');
-            $table->date('manufacturing_date');
-            $table->date('expiry_date');
+            $table->unsignedBigInteger('c_id');
+            $table->string('Name');
             $table->timestamps();
-        });
+            $table->foreign('c_id')->references('id')->on('models')->onDelete('cascade');
+                });
     }
 
     /**
@@ -30,7 +29,6 @@ class Product extends Migration
      */
     public function down()
     {
-        //
-        Schema::dropIfExists('Product');
+        Schema::dropIfExists('companies');
     }
 }
