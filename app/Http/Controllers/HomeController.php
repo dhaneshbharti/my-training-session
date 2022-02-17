@@ -87,5 +87,13 @@ class HomeController extends Controller
         $data = Product::where('id', $id)->first();
         return Inertia::render('Updatepro', ['page' => $data]);
     }
+    public function dhanesh()
+    {
+        return Inertia::render('User/Practice');
+    }
+    public function dhanesh2()
+    {
+        return Inertia::render('Practice');
+    }
 
 }

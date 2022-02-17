@@ -38,6 +38,8 @@ Route::post('update',[\App\Http\Controllers\ProductController::class,'Update']);
 Route::get('access',[\App\Http\Controllers\AccessoriesController::class,'accessories']);
 Route::get('cmodel',[\App\Http\Controllers\ProductController::class,'cmodel']);
 Route::get('product/model/{id}',[\App\Http\Controllers\ProductController::class,'comodel']);
+Route::get('dhanesh',[\App\Http\Controllers\ProductController::class,'worker']);
+Route::get('dhaneshyr/{id}',[\App\Http\Controllers\ProductController::class,'role']);
 
 
 

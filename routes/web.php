@@ -49,3 +49,6 @@ Route::get('/user/edit/{id}', [\App\Http\Controllers\HomeController::class, 'use
 Route::get('/view2', [\App\Http\Controllers\HomeController::class, 'joe']);
 Route::get('/Updatepro/{id}', [\App\Http\Controllers\HomeController::class, 'dhanes']);
 
+Route::get('/rose', [\App\Http\Controllers\HomeController::class, 'dhanesh']);
+Route::get('/rosey', [\App\Http\Controllers\HomeController::class, 'dhanesh2']);
+

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\Company;
 use App\Models\CModel;
+use App\Models\Worker;
+use App\Models\Role;
 
 use Illuminate\Http\Request;
 
@@ -35,6 +37,19 @@ class ProductController extends Controller
         return response()->json(['data' => $data]);
     }
     public function comodel($id)
+    {
+        //
+        return response()->json(['data' => Role::where('R_id', $id)->get()], 200);
+
+    }
+    public function worker()
+    {
+        //
+        $data =Worker::all();
+
+        return response()->json(['data' => $data]);
+    }
+    public function role($id)
     {
         //
         return response()->json(['data' => Company::where('c_id', $id)->get()], 200);
